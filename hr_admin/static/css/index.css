@@ -1,0 +1,10 @@
+.home h2{
+  color: #554;
+  text-shadow: 2px 1px 5px #714;
+  font-family: monospace;
+  font-weight: 400;
+  text-align: center;
+}
+#bog{
+  background-image: url(/static/img/bg.png);
+}

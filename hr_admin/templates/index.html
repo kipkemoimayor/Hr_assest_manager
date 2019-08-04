@@ -1,13 +1,32 @@
 {%extends 'base.html'%}
 
 {%block content%}
+<div class="container">
 
-  <div class="">
-    <section>
-      <header>
-        <h2>Welocome Admin</h2>
-      </header>
-    </section>
+<div class="row">
+  <div class="col-md-6">
+    <div class="home">
+      <section>
+        <header>
+          <h5>Security Accounts</h5>
+          <p>Manage accounts <a href="{%url 'signup'%}">SignUp</a> </p>
+        </header>
+        <div class="card">
+            <div id="bog" class="card-header">
 
+            </div>
+            <div class="card-body">
+              <p>Assest management system</p>
+            </div>
+            <div class="footer">
+              <p>2019/07/01</p>
+            </div>
+        </div>
+      </section>
+
+    </div>
   </div>
+</div>
+
+</div>
 {%endblock%}

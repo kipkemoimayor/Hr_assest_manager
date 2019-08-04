@@ -1,13 +1,24 @@
+{%load static%}
+{%load bootstrap4%}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
+    {%block styles%}
+      {%bootstrap_css%}
+      <link rel="stylesheet" href="{%static 'css/index.css'%}">
+      <link rel="icon" href="{%static 'img/ic.svg'%}">
+    {%endblock%}
   </head>
   <body>
+    {%include 'navbar.html'%}
     {%block content%}
     <!-- all here-->
     {%endblock%}
 
+    {%block scripts%}
+      {%bootstrap_javascript%}
+    {%endblock%}
   </body>
 </html>

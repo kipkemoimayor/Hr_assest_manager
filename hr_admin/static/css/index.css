@@ -8,3 +8,64 @@
 #bog{
   background-image: url(/static/img/bg.png);
 }
+.dashboard{
+  width: 20em;
+  color: white;
+  height: 540px;
+  position: fixed;
+  background-color:#212529;
+  box-shadow: 4px 3px  15px black;
+  /* background-image: url(/static/img/bg.png); */
+}
+.jumbo{
+  text-align: center;
+  margin-top: 8px;
+}
+#default{
+  color: #584;
+}
+
+.account{
+  text-align: left;
+  margin-top: 3em;
+  margin-left: 2.5em;
+  border-radius:5px;
+  padding: 8px;
+}
+.account p{
+  font-size: 20px;
+  font-weight: 300;
+}
+.account:hover{
+  transition: 300ms;
+  background-color: purple;
+
+}
+.account a:active{
+    background-color: blue;
+}
+.asset{
+  text-align: left;
+  margin-left: 2.5em;
+  margin-top: 3em;
+  border-radius:5px;
+  padding: 8px;
+}
+.asset:hover{
+  transition: 300ms;
+  background-color: purple;
+
+}
+.asset p{
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.actives{
+  background-color: rgba(0,0,0,0.2);
+  border-bottom: 1px solid #547 ;
+}
+#dashboard{
+  margin: auto;
+  width: 80%;
+}

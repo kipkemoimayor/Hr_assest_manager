@@ -105,5 +105,8 @@ def user_logout(request):
 @login_required(login_url="/accounts/login/")
 def dashboard(request):
     title=f'{request.user} dashboard'
+    if request.user.is_superuser:
 
-    return render(request,'dashboard.html',{"title":title})
+        return render(request,'dashboard.html',{"title":title})
+    else:
+        return HttpResponse("You are not authorized")

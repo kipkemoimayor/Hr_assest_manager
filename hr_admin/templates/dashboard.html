@@ -1,20 +1,28 @@
 {%extends 'base.html'%}
 
 {%block content%}
+  <div class="dashboard">
+    <section id='dashboard'>
+      <header>
+        <div class="jumbo">
+            <h2>Dashboard</h2>
+            <hr id="default" class="bg-danger">
+        </div>
+
+      </header>
+      <div class="account actives">
+        <p><a>  <i class="fas fa-user-plus"></i>Add User</a></p>
+      </div>
+
+      <div class="asset">
+        <p><a> <i class="fas fa-puzzle-piece"></i> Asign Assets</a></p>
+      </div>
+      <div class="asset">
+        <p><a> <i class="far fa-bell"></i>Notifactions</a></p>
+      </div>
+    </section>
 
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-4">
-      <section>
-        <header>
-          <h3>Panel</h3>
-        </header>
-      </section>
-
-    </div>
 
   </div>
-
-</div>
 {%endblock%}

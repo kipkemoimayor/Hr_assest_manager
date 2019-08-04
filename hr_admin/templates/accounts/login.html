@@ -21,7 +21,7 @@
                       </div>
               {% endfor %}
         </header>
-        <form class="" action="/accounts/login" method="post">
+        <form class="" action="/accounts/login/" method="post">
           {%csrf_token%}
           {%bootstrap_form form%}
           <button class="btn btn-dark btn-sm" type="submit" name="button">Login</button>

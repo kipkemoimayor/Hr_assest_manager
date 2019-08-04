@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth import login ,authenticate,logout
+from django.contrib.auth.decorators import login_required
 from .forms import SignupForm,LoginForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
@@ -101,3 +102,8 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect("/")
+@login_required(login_url="/accounts/login/")
+def dashboard(request):
+    title=f'{request.user} dashboard'
+
+    return render(request,'dashboard.html',{"title":title})

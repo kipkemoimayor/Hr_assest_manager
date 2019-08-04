@@ -10,3 +10,4 @@ class CustomUser(AbstractUser,models.Model):
     company=models.CharField(max_length=30)
     phone=models.CharField(max_length=30)
     employees=models.CharField(max_length=30)
+    email=models.CharField(max_length=50)

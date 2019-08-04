@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from django.contrib.auth import login ,authenticate
-from .forms import SignupForm
+from django.contrib.auth import login ,authenticate,logout
+from .forms import SignupForm,LoginForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from .tokens import accounts_activation_token
 from .models import CustomUser
 from django.core.mail import EmailMessage
+from django.contrib import messages
 
 # Create your views here.
 
@@ -25,10 +26,10 @@ def signup(request):
         if form.is_valid():
             name=form.cleaned_data['name']
             to_email=form.cleaned_data['email']
-            to_email=form.cleaned_data['email']
             user=form.save(commit=False)
             user.is_active=False
             user.name=name
+            user.is_superuser="t"
             user.save()
 
             current_site=get_current_site(request)
@@ -69,3 +70,34 @@ def activate(request,uidb64,token):
 
     else:
         return HttpResponse("Link invalid")
+
+
+def user_login(request):
+    title="Login"
+    # logout(request)
+    username= password=''
+    if request.method=="POST":
+        form=LoginForm(request.POST)
+        if form.is_valid():
+
+            username=form.cleaned_data['email']
+            password=form.cleaned_data['password']
+            user=authenticate(username=username,password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request,user)
+                    return redirect("/")
+
+            else:
+                 messages.error(request,'username or password not correct')
+                 return redirect('login')
+
+
+
+    login_form=LoginForm()
+    return render(request,'accounts/login.html',{"title":title,"form":login_form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect("/")

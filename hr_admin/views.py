@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth import login ,authenticate,logout
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm,LoginForm
+from .forms import SignupForm,LoginForm,UserSignUp,NewPasswordForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -71,6 +71,22 @@ def activate(request,uidb64,token):
 
     else:
         return HttpResponse("Link invalid")
+def activate_user(request,uidb64,token):
+    try:
+        uid=force_text(urlsafe_base64_decode(uidb64))
+        user=CustomUser.objects.get(pk=uid)
+
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user=None
+
+    if user is not None and accounts_activation_token.check_token(user,token):
+        user.is_active=True;
+        user.save()
+        login(request,user)
+        return HttpResponse("<p>Your account is now active please Create new password <a href='/accounts/password/'>here</a></p>")
+
+    else:
+        return HttpResponse("Link invalid")
 
 
 def user_login(request):
@@ -106,7 +122,80 @@ def user_logout(request):
 def dashboard(request):
     title=f'{request.user} dashboard'
     if request.user.is_superuser:
+        if request.method=='POST':
+            form=UserSignUp(request.POST)
+            if form.is_valid():
+                name=form.cleaned_data['name']
+                username=form.cleaned_data['username']
+                to_email=form.cleaned_data['email']
+                user=form.save(commit=False)
+                user.is_active=False
+                user.name=name
+                user.is_superuser="f"
+                valid_user=CustomUser.objects.filter(username=username)
+                valid_email=CustomUser.objects.filter(email=to_email)
+                print(valid_user,valid_email)
+                print("*"*9)
+                if len(username)==0 or len(valid_email) ==0 :
+                    user.save()
+                    current_site=get_current_site(request)
+                    mail_subject=f" Hello {name} Please Activate your Account"
+                    message=render_to_string('user_activate.html',{
+                        'user':user,
+                        "domain":current_site.domain,
+                        'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                        'token':accounts_activation_token.make_token(user),
+                    })
+                    to_email=form.cleaned_data['email']
+                    email=EmailMessage(
+                        mail_subject,message,to=[to_email]
+                    )
+                    email.send()
+                    return redirect("dashboard")
 
-        return render(request,'dashboard.html',{"title":title})
+                else:
+                    messages.error(request,'username or email already taken')
+                    return redirect("dashboard")
+
+        form=UserSignUp()
+
+
+        return render(request,'dashboard.html',{"title":title,"form":form})
     else:
         return HttpResponse("You are not authorized")
+
+
+def new_password(request):
+    title='Create new Password'
+
+    if request.method=='POST':
+        new_user=request.POST.get('username')
+        test_user=CustomUser.objects.filter(username=new_user)
+        if len(test_user)>=1:
+            instance=CustomUser.objects.get(username=new_user)
+            form=NewPasswordForm(request.POST,instance=instance)
+            if form.is_valid():
+                user=form.cleaned_data['username']
+                password2=form.cleaned_data['password2']
+                password1=form.cleaned_data['password1']
+                username=CustomUser.objects.filter(username=user)
+                if username is not None:
+                    if password1 and  password2 and password1!=password2:
+                        messages.error(request,"Password mismatch")
+                        return redirect("password")
+                    else:
+                        password=form.save(commit=False)
+                        password.set_password(form.cleaned_data['password2'])
+                        password.save()
+                        messages.success(request,"Password changed succefully please Login")
+                        return redirect("login")
+                else:
+                    messages.error(request,"invalid Username or Password mismatch")
+                    return redirect("password")
+        else:
+            messages.error(request,"invalid Username")
+            return redirect("password")
+
+    form=NewPasswordForm()
+
+    return render(request,'accounts/pass_new.html',{'title':title,"form":form})

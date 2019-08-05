@@ -23,3 +23,14 @@ class CustomUserChangeForm(UserChangeForm):
 class LoginForm(forms.Form):
     email=forms.CharField(label="Email",required=True)
     password=forms.CharField(label="Password",required=True, widget=forms.PasswordInput)
+
+
+class UserSignUp(forms.ModelForm):
+    class Meta:
+        model=CustomUser
+        fields=('name','email',"username")
+
+class NewPasswordForm(UserCreationForm):
+    class Meta(UserChangeForm):
+        model=CustomUser
+        fields=('username',"password1",'password2')

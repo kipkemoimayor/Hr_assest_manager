@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-
+{% load bootstrap4%}
 {%block content%}
   <div class="dashboard">
     <section id='dashboard'>
@@ -14,15 +14,42 @@
         <p><a>  <i class="fas fa-user-plus"></i>Add User</a></p>
       </div>
 
-      <div class="asset">
+      <div  id="two" class="asset">
         <p><a> <i class="fas fa-puzzle-piece"></i> Asign Assets</a></p>
       </div>
-      <div class="asset">
-        <p><a> <i class="far fa-bell"></i>Notifactions</a></p>
+      <div id="three" class="asset">
+        <p><a <i class="far fa-bell"></i>Notifactions</a></p>
       </div>
     </section>
 
 
 
   </div>
+<div class="phase">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>accounts</h1>
+        {% for message in messages %}
+
+                    <div class="alert alert-danger">
+                        <a class="close"  data-dismiss="alert">×</a>
+
+                        {{ message }}
+
+                    </div>
+            {% endfor %}
+        <form class="" action="" method="post">
+          {%csrf_token%}
+          {%bootstrap_form form%}
+          <button class="btn btn-info btn-sm" type="submit" name="button">Add user</button>
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
 {%endblock%}

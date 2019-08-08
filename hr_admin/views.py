@@ -1,14 +1,14 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import login ,authenticate,logout
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm,LoginForm,UserSignUp,NewPasswordForm
+from .forms import SignupForm,LoginForm,UserSignUp,NewPasswordForm,AssestForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import accounts_activation_token
-from .models import CustomUser
+from .models import CustomUser,AssetModel
 from django.core.mail import EmailMessage
 from django.contrib import messages
 
@@ -122,6 +122,7 @@ def user_logout(request):
 def dashboard(request):
     title=f'{request.user} dashboard'
     if request.user.is_superuser:
+        users=CustomUser.objects.all()
         if request.method=='POST':
             form=UserSignUp(request.POST)
             if form.is_valid():
@@ -158,9 +159,9 @@ def dashboard(request):
                     return redirect("dashboard")
 
         form=UserSignUp()
+        user_form=AssestForm()
 
-
-        return render(request,'dashboard.html',{"title":title,"form":form})
+        return render(request,'dashboard.html',{"title":title,"form":form,'users':users,'user_form':user_form})
     else:
         return HttpResponse("You are not authorized")
 
@@ -199,3 +200,24 @@ def new_password(request):
     form=NewPasswordForm()
 
     return render(request,'accounts/pass_new.html',{'title':title,"form":form})
+
+
+#ajax call
+
+def asset_ajax(request):
+
+    if request.method=="POST":
+        value=request.POST.get('value','')
+        instance=CustomUser.objects.get(id=value)
+
+        form=AssestForm(request.POST)
+
+
+        if form.is_valid():
+            asset=form.save(commit=False)
+            asset.user=instance
+            asset.save()
+            print("saved......")
+            print(AssetModel.objects.all)
+            data={'success':"succefully asigned asset"}
+            return JsonResponse(data)

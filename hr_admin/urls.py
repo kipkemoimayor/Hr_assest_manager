@@ -10,4 +10,5 @@ urlpatterns=[
     path("accounts/logout/",views.user_logout,name="logout"),
     path("accounts/dashboard/",views.dashboard,name='dashboard'),
     path("accounts/password/",views.new_password,name='password'),
+    path("assest/asign/",views.asset_ajax,name='asset'),
 ]

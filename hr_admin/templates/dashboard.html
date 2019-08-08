@@ -48,6 +48,25 @@
       </div>
 
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Assets</h2>
+        <form id="assest" class="form-group" action="{%url 'asset'%}" method="post">
+            {%csrf_token%}
+          <select name='value' class="form-control" name="">
+            {%for names in users%}
+            <option   value="{{names.id}}">{{names.username}}</option>
+              {%endfor%}
+
+              {%bootstrap_form user_form%}
+              <button class="btn btn-info btn-sm" type="submit" name="button">Assign Asset</button>
+          </select>
+
+
+        </form>
+      </div>
+
+    </div>
 
   </div>
 </div>

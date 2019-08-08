@@ -10,3 +10,8 @@ class CustomUser(AbstractUser,models.Model):
     phone=models.CharField(max_length=30)
     employees=models.CharField(max_length=30)
     email=models.CharField(max_length=50)
+
+
+class AssetModel(models.Model):
+    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    asset_name=models.CharField(max_length=50)

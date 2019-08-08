@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.contrib.auth.models  import User
-from .models import CustomUser
+from .models import CustomUser,AssetModel
 
 class SignupForm(UserCreationForm):
 
@@ -34,3 +34,8 @@ class NewPasswordForm(UserCreationForm):
     class Meta(UserChangeForm):
         model=CustomUser
         fields=('username',"password1",'password2')
+
+class AssestForm(forms.ModelForm):
+    class Meta:
+        model=AssetModel
+        exclude=['user']

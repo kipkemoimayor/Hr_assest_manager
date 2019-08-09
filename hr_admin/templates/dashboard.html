@@ -60,6 +60,15 @@
                     <h3>Assign new Item to employees </h3>
                   </header>
                 </section>
+                <div id="message" class="alert alert-success">
+                    <a class="close" data-dismiss="alert">×</a>
+                    Data saved succefully
+                </div>
+                <div id="message_err" class="alert alert-danger">
+                    <a class="close" data-dismiss="alert">×</a>
+                    An Error Occured 
+                </div>
+
 
                         <form id="assest" class="form-group" action="{%url 'asset'%}" method="post">
                             {%csrf_token%}
@@ -75,19 +84,15 @@
 
               </div>
 
-              <section>
-                <a class="btn btn-info btn-sm" href="{%url 'assest_view'%}">Assign assest</a>
-              </section>
-
             </div>
             <div  class="col-md-6 left">
-              <div class="">
+              <div align='center' class="">
                 <p>All list for assest against employees will show here. Click to show all the available list</p>
 
               </div>
               <div class="list">
               </div>
-              <section>
+              <section align='center'>
                 <a btn-data class="btn btn-info btn-sm">View Asset lists</a>
 
               </section>

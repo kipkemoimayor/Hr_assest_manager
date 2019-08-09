@@ -90,3 +90,6 @@
   margin: auto;
   width: 80%;
 }
+#message ,#message_err{
+  display: none;
+}

@@ -38,8 +38,15 @@ $(document).ready(_=>{
       method:"POST",
       data:form.serialize(),
       dataType:"json",
-      success:function(data) {
-        alert(JSON.stringify(data))
+      success:data=>{
+        setTimeout(function () {
+        $("#message").fadeOut()
+      }, 4*1000);
+        $("#message").show()
+      },
+      error:function(){
+        $("#message_err").fadeIn(800);
+        $("#message_err").show();
       },
     });
     $("#id_asset_name").val("")
@@ -58,8 +65,8 @@ $(document).ready(_=>{
         // })
         var list=''
         for (let i in data){
-          list+=`${i} owns <strong> ${data[i]}</strong>`
-          list+=`</br>`
+        list+= `<ul class='group-list'><li class='list-group-item'>${i} owns <strong> ${data[i]}</strong></li></ul>`
+          // list+=`</br>`
         }
         $(".list").html(list)
       },

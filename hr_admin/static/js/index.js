@@ -8,11 +8,19 @@ $(document).ready(_=>{
     anchor.classList.add("actives")
     anchorTwo.classList.remove("actives")
     anchorThree.classList.remove("actives")
+    $("#asset").fadeOut(2000);
+    $("#account").fadeIn(2000);
+    $("#asset").hide();
   });
   anchorTwo.addEventListener("click",_=>{
     anchorTwo.classList.add("actives")
     anchor.classList.remove("actives")
     anchorThree.classList.remove("actives")
+    $("#account").fadeOut(2000);
+    $("#account").hide();
+    $("#asset").fadeIn(2000);
+    $("#asset").show();
+
   });
   anchorThree.addEventListener("click",_=>{
     anchorThree.classList.add("actives")
@@ -36,4 +44,27 @@ $(document).ready(_=>{
     });
     $("#id_asset_name").val("")
   });
+
+  //ajax get request
+  let btnClick= document.querySelector("[btn-data]")
+  btnClick.addEventListener("click",_=>{
+    $.ajax({
+      url:"/assest/admin/view/",
+      method:'GET',
+      dataType:'json',
+      success:function (data) {
+        // data.forEach(name=>{
+        //   alert(name)
+        // })
+        var list=''
+        for (let i in data){
+          list+=`${i} owns <strong> ${data[i]}</strong>`
+          list+=`</br>`
+        }
+        $(".list").html(list)
+      },
+    })
+  });
+
+
 });

@@ -122,7 +122,7 @@ def user_logout(request):
 def dashboard(request):
     title=f'{request.user} dashboard'
     if request.user.is_superuser:
-        users=CustomUser.objects.all()
+        users=CustomUser.objects.all().exclude(username=request.user)
         if request.method=='POST':
             form=UserSignUp(request.POST)
             if form.is_valid():
@@ -218,6 +218,13 @@ def asset_ajax(request):
             asset.user=instance
             asset.save()
             print("saved......")
-            print(AssetModel.objects.all)
             data={'success':"succefully asigned asset"}
             return JsonResponse(data)
+
+def view_assests(request):
+    assets=AssetModel.objects.all()
+    data=dict()
+    for j in assets:
+        data[j.user.name]=j.asset_name
+        print("success")
+    return JsonResponse(data)

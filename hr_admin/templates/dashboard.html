@@ -28,7 +28,7 @@
 <div class="phase" style="padding-top:4.1em;">
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
+      <div   id ='account' class="col-md-12">
         <h1>accounts</h1>
         {% for message in messages %}
 
@@ -49,20 +49,57 @@
 
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div id="asset" class="col-md-12">
         <h2>Assets</h2>
-        <form id="assest" class="form-group" action="{%url 'asset'%}" method="post">
-            {%csrf_token%}
-          <select name='value' class="form-control" name="">
-            {%for names in users%}
-            <option   value="{{names.id}}">{{names.username}}</option>
-              {%endfor%}
-          </select>
-          {%bootstrap_form user_form%}
-          <button class="btn btn-info btn-sm" type="submit" name="button">Assign Asset</button>
+        <div class="master_class">
+          <div class="row">
+            <div class="col-md-6 right">
+              <div class="assign">
+                <section>
+                  <header>
+                    <h3>Assign new Item to employees </h3>
+                  </header>
+                </section>
 
-        </form>
+                        <form id="assest" class="form-group" action="{%url 'asset'%}" method="post">
+                            {%csrf_token%}
+                          <select name='value' class="form-control" name="">
+                            {%for names in users%}
+                            <option   value="{{names.id}}">{{names.username}}</option>
+                              {%endfor%}
+                          </select>
+                          {%bootstrap_form user_form%}
+                          <button class="btn btn-dark btn-sm" type="submit" name="button">Assign Asset</button>
+
+                        </form>
+
+              </div>
+
+              <section>
+                <a class="btn btn-info btn-sm" href="{%url 'assest_view'%}">Assign assest</a>
+              </section>
+
+            </div>
+            <div  class="col-md-6 left">
+              <div class="">
+                <p>All list for assest against employees will show here. Click to show all the available list</p>
+
+              </div>
+              <div class="list">
+              </div>
+              <section>
+                <a btn-data class="btn btn-info btn-sm">View Asset lists</a>
+
+              </section>
+
+            </div>
+
+
+          </div>
+
+        </div>
       </div>
+
 
 
     </div>

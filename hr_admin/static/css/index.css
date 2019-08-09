@@ -74,3 +74,19 @@
   position: absolute;
   left: 20em;
 }
+#asset{
+  display: none;
+}
+/* #assest{
+  display:none;
+} */
+.left{
+  border-left: 1px solid rgba(255,0,0,0.4);
+}
+.right{
+  border-right: 1px solid rgba(255,0,0,0.4);
+}
+.assign{
+  margin: auto;
+  width: 80%;
+}

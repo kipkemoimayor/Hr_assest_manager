@@ -9,6 +9,7 @@
   background-image: url(/static/img/bg.png);
 }
 .dashboard{
+  margin-top: 4em;
   width: 20em;
   color: white;
   height: 540px;

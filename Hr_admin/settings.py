@@ -33,9 +33,9 @@ Email Registratiom
 '''
 
 EMAIL_USE_TLS=True
-EMAIL_HOST_USER='jitegemee hehe'
+EMAIL_HOST_USER='angeldilorna@gmail.com'
 EMAIL_HOST='smtp.gmail.com'
-EMAIL_HOST_PASSWORD='even 20 to 50 will do'
+EMAIL_HOST_PASSWORD='Collins@24'
 EMAIL_PORT=587
 
 AUTH_USER_MODEL = 'hr_admin.CustomUser'
@@ -91,9 +91,9 @@ WSGI_APPLICATION = 'Hr_admin.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_name maybe elephant',
-        'PASSWORD':'pia hapa jitegemee',
-        'USER':'""""""',
+        'NAME': 'hr',
+        'PASSWORD':'collo',
+        'USER':'collo',
 
     }
 }

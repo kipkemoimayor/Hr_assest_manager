@@ -32,7 +32,8 @@ $(document).ready(_=>{
       dataType:"json",
       success:function(data) {
         alert(JSON.stringify(data))
-      }
+      },
     });
+    $("#id_asset_name").val("")
   });
 });

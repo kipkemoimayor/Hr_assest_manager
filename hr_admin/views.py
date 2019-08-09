@@ -225,6 +225,9 @@ def view_assests(request):
     assets=AssetModel.objects.all()
     data=dict()
     for j in assets:
-        data[j.user.name]=j.asset_name
-        print("success")
+        data[j.user.name]=[]
+    for i in assets:
+            for j in data:
+                if i.user.name == j:
+                    data[j].append(i.asset_name)
     return JsonResponse(data)

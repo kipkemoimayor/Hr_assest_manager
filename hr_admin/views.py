@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse,Http404
 from django.contrib.auth import login ,authenticate,logout
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm,LoginForm,UserSignUp,NewPasswordForm,AssestForm,ProfileForm
+from .forms import SignupForm,LoginForm,UserSignUp,NewPasswordForm,AssestForm,ProfileForm,UpdateProfile
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -239,6 +239,18 @@ def employee_profile(request):
         profiles=EmployeeProfile.objects.filter(user=request.user)
     except Exception as e:
         raise Http404()
+    if profiles:
+        if request.method=="POST":
+            id=EmployeeProfile.objects.get(user=request.user)
+            id=id.id
+            instance=EmployeeProfile.objects.get(pk=int(id))
+            date=request.POST.get("date",'')
+            update_form=UpdateProfile(request.POST,request.FILES,instance=instance)
+            if update_form.is_valid():
+                update=update_form.save(commit=False)
+                update.save()
+                # messages.success(request,"Profile Updated succefully")
+                return redirect('profile')
 
     if request.method=="POST":
         date=request.POST.get("date",'')
@@ -251,17 +263,6 @@ def employee_profile(request):
             profile.save()
             return redirect("profile")
 
-    if request.method=="POST":
-        instance=EmployeeProfile.objects.get(user=request.user)
-        date=request.POST.get("date",'')
-        update_form=ProfileForm(request.POST,request.FILES,instance=instance)
-        if update_form.is_valid():
-            update_form.save()
-                    # messages.success(request,"Profile Updated succefully")
-                    # return redirect(profile)
-        return redirect('profile')
-    else:
-        update_form=ProfileForm()
 
     arr=[]
     for i in profiles:
@@ -279,5 +280,5 @@ def employee_profile(request):
         pass
 
     form=ProfileForm()
-
+    update_form=UpdateProfile()
     return render(request,'profile.html',{"title":title,"form":form,'profiles':profiles,"update_form":update_form,"name":name})

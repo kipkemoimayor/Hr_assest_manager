@@ -44,3 +44,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model=EmployeeProfile
         exclude=['user','role','dob']
+class UpdateProfile(forms.ModelForm):
+    class Meta:
+        model=EmployeeProfile
+        exclude=['user','role','dob']

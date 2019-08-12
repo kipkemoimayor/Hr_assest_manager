@@ -20,7 +20,7 @@
 
           <div class="row">
           <div class="col-md-4 ">
-          <p style='text-align:center'> <strong class="bg-warning" id="short">{{name}}</strong></p>
+          <p style='text-align:center'> <strong class="bg-warning" id="short">{{name}}{{id}}</strong></p>
             <br>
             <p style='text-align:center'><button data-toggle="modal" data-target="#modalSubscriptionForm" class="btn btn-dark btn-sm" type="button" name="button">Update profile</button></p>
             <div style='color:black;background-color:rgba(0,0,0,0.5)' class="modal fade" id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -83,6 +83,23 @@
             </div>
             {%endif%}
           </div>
+          <p>Employee Details </p>
+          {% for details in profiles%}
+          <span> {{details.role}}</span>
+          {%endfor%}
+          <br>
+          <address class="">
+            <br>
+            {% for details in profiles%}
+            <p>Phone {{details.Phone}}</p>
+            <p>KRA: {{details.kra}}</p>
+            <p>ID No:{{details.id_no}}</p>
+            <p>DOB: {{details.dob}}</p>
+
+            {%endfor%}
+          </address>
+
+
 
             </div>
         </div>

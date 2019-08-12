@@ -33,9 +33,9 @@ Email Registratiom
 '''
 
 EMAIL_USE_TLS=True
-EMAIL_HOST_USER='angeldilorna@gmail.com'
+EMAIL_HOST_USER='**@gmail.com'
 EMAIL_HOST='smtp.gmail.com'
-EMAIL_HOST_PASSWORD='Collins@24'
+EMAIL_HOST_PASSWORD='*8**'
 EMAIL_PORT=587
 
 AUTH_USER_MODEL = 'hr_admin.CustomUser'
@@ -93,8 +93,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hr',
-        'PASSWORD':'collo',
-        'USER':'collo',
+        'PASSWORD':'**',
+        'USER':'**',
 
     }
 }

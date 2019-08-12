@@ -15,3 +15,13 @@ class CustomUser(AbstractUser,models.Model):
 class AssetModel(models.Model):
     user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     asset_name=models.CharField(max_length=50)
+
+
+class EmployeeProfile(models.Model):
+    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    image=models.ImageField(upload_to='profile/',default='ig.png')
+    role=models.CharField(max_length=200)
+    Phone=models.CharField(max_length=200)
+    kra=models.CharField(max_length=200)
+    id_no=models.CharField(max_length=200)
+    dob=models.DateField()

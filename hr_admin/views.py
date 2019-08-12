@@ -1,14 +1,14 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse,JsonResponse
+from django.http import HttpResponse,JsonResponse,Http404
 from django.contrib.auth import login ,authenticate,logout
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm,LoginForm,UserSignUp,NewPasswordForm,AssestForm
+from .forms import SignupForm,LoginForm,UserSignUp,NewPasswordForm,AssestForm,ProfileForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import accounts_activation_token
-from .models import CustomUser,AssetModel
+from .models import CustomUser,AssetModel,EmployeeProfile
 from django.core.mail import EmailMessage
 from django.contrib import messages
 
@@ -231,3 +231,53 @@ def view_assests(request):
                 if i.user.name == j:
                     data[j].append(i.asset_name)
     return JsonResponse(data)
+
+
+def employee_profile(request):
+    title="Profile"
+    try:
+        profiles=EmployeeProfile.objects.filter(user=request.user)
+    except Exception as e:
+        raise Http404()
+
+    if request.method=="POST":
+        date=request.POST.get("date",'')
+        form=ProfileForm(request.POST,request.FILES)
+        if form.is_valid():
+            profile=form.save(commit=False)
+            print(date)
+            profile.dob=date
+            profile.user=request.user
+            profile.save()
+            return redirect("profile")
+
+    if request.method=="POST":
+        instance=EmployeeProfile.objects.get(user=request.user)
+        date=request.POST.get("date",'')
+        update_form=ProfileForm(request.POST,request.FILES,instance=instance)
+        if update_form.is_valid():
+            update_form.save()
+                    # messages.success(request,"Profile Updated succefully")
+                    # return redirect(profile)
+        return redirect('profile')
+    else:
+        update_form=ProfileForm()
+
+    arr=[]
+    for i in profiles:
+        arr.append(i.user.name)
+
+
+    if arr:
+        names=arr[0].split(" ")
+        if len(names)>1:
+            name=names[0][0]+names[1][0]
+        else:
+            name=names[0][0]+names[0][-1]
+    else:
+        name=''
+        pass
+
+    form=ProfileForm()
+
+    return render(request,'profile.html',{"title":title,"form":form,'profiles':profiles,"update_form":update_form,"name":name})

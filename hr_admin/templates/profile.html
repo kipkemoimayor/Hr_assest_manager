@@ -1,0 +1,96 @@
+{%extends 'base.html'%}
+{%load bootstrap4%}
+{{block.super}}
+  {%block content%}
+<div style='margin-top:4.1em' class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+
+      {%for i in profiles%}
+      {%if i.image%}
+        <div style="background-image:url({{i.image.url}})" class="jumboton profilImage">
+          <div class="mayor">
+
+
+            {%endif%}
+            <br>
+          {%endfor%}
+          {%if profiles%}
+
+          <div class="row">
+          <div class="col-md-4 ">
+          <p style='text-align:center'> <strong class="bg-warning" id="short">{{name}}</strong></p>
+            <br>
+            <p style='text-align:center'><button data-toggle="modal" data-target="#modalSubscriptionForm" class="btn btn-dark btn-sm" type="button" name="button">Update profile</button></p>
+            <div style='color:black;background-color:rgba(0,0,0,0.5)' class="modal fade" id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <h4 style="color:black" class="modal-title w-100 font-weight-bold">Update Profile</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body mx-3">
+                <form class="form-group" enctype="multipart/form-data" action="" method="post">
+                  {%csrf_token%}
+                  {%bootstrap_form update_form%}
+                  <div class="form-group">
+                    <label for="">Date Of Birth</label>
+                    <input class="form-control" required name="date" type="date" value="">
+                  </div>
+                  <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn btn-warning btn-sm">Update</button>
+                  </div>
+                </form>
+
+
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+          </div>
+          <div class="col-md-4 ">
+            {%for i in profiles%}
+            {%if i.image%}
+            <img height="200" width="200" class="rounded-circle " src="{{i.image.url}}" alt="">
+            {%else%}
+            <img src="" alt="{{user}}">
+            {%endif%}
+            <p style="">{{i.bio}}</p>
+
+            {%endfor%}
+            {%else%}
+            <div class="update">
+              <form class="form-group" action="{%url 'profile'%}" enctype="multipart/form-data" method="post">
+                <h5 style="text-align:center" class="alert alert-info">Please Update Your Profile</h5>
+                {%csrf_token%}
+                {%bootstrap_form form%}
+                <div class="form-group">
+                  <label for="">Date Of Birth</label>
+                  <input class="form-control" name="date" type="date" value="">
+                </div>
+
+                <button class="btn btn-dark btn-sm" type="submit" name="button">Submit</button>
+
+              </form>
+            </div>
+            {%endif%}
+          </div>
+
+            </div>
+        </div>
+          </div>
+
+
+    </div>
+
+  </div>
+  </div>
+{%endblock%}

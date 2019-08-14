@@ -74,4 +74,18 @@ $(document).ready(_=>{
   });
 
 
+  // Pusher Notifications
+
+  var pusher = new Pusher('80de7e6b8bc917286ed8', {
+  cluster: 'ap2',
+  forceTLS: true
+  });
+
+  var channel = pusher.subscribe('my-channel');
+  var pa=document.querySelector("#love");
+  channel.bind('my-event', function(data) {
+      pa.textContent=JSON.stringify(data)
+  });
+
+
 });

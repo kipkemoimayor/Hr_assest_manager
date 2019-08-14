@@ -59,9 +59,9 @@
           <div class="col-md-4 ">
             {%for i in profiles%}
             {%if i.image%}
-            <img height="200" width="200" class="rounded-circle " src="{{i.image.url}}" alt="">
+            <img draggable="true"  height="200" width="200" class="rounded-circle " src="{{i.image.url}}" alt="">
             {%else%}
-            <img src="" alt="{{user}}">
+            <img draggable="true" src="" alt="{{user}}">
             {%endif%}
             <p style="">{{i.bio}}</p>
 

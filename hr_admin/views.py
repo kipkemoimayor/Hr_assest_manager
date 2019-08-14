@@ -8,11 +8,22 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import accounts_activation_token
-from .models import CustomUser,AssetModel,EmployeeProfile
+from .models import CustomUser,AssetModel,EmployeeProfile,Notifications
 from django.core.mail import EmailMessage
 from django.contrib import messages
+import pusher
 
 # Create your views here.
+'''
+Account settings
+'''
+channels_client = pusher.Pusher(
+    app_id='841275',
+    key='80de7e6b8bc917286ed8',
+    secret='bfd12143823fae827fa2',
+    cluster='ap2',
+    ssl=True
+)
 
 def index(request):
     title="Admin"
@@ -103,6 +114,16 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request,user)
+                    '''
+                    saving status and user to Notifications
+                    '''
+
+                    s='my-channel'
+                    d='message'
+                    mess=f'{request.user} has logged in!'
+                    channels_client.trigger(s, 'my-event',{d: mess})
+                    s=Notifications.objects.create(message=mess,user=request.user)
+                    s.save()
                     return redirect("/")
 
             else:
@@ -116,6 +137,21 @@ def user_login(request):
 
 
 def user_logout(request):
+    '''
+    saving status and user to Notifications
+    '''
+
+    s='my-channel'
+    d='message'
+    mess=f'{request.user} logged out!'
+
+    try:
+        channels_client.trigger(s, 'my-event',{d: mess})
+        s=Notifications.objects.create(message=mess,user=request.user)
+        s.save()
+    except:
+        print("Error Sending Notifications")
+
     logout(request)
     return redirect("/")
 @login_required(login_url="/accounts/login/")
@@ -249,6 +285,16 @@ def employee_profile(request):
             if update_form.is_valid():
                 update=update_form.save(commit=False)
                 update.save()
+                '''
+                saving status and user to Notifications
+                '''
+
+                s='my-channel'
+                d='message'
+                mess=f'{request.user} Updated Profile!'
+                channels_client.trigger(s, 'my-event',{d: mess})
+                s=Notifications.objects.create(message=mess,user=request.user)
+                s.save()
                 # messages.success(request,"Profile Updated succefully")
                 return redirect('profile')
 
@@ -261,6 +307,16 @@ def employee_profile(request):
             profile.dob=date
             profile.user=request.user
             profile.save()
+            '''
+            saving status and user to Notifications
+            '''
+
+            s='my-channel'
+            d='message'
+            mess=f'{request.user} Updated Profile!'
+            channels_client.trigger(s, 'my-event',{d: mess})
+            s=Notifications.objects.create(message=mess,user=request.user)
+            s.save()
             return redirect("profile")
 
 
@@ -282,3 +338,5 @@ def employee_profile(request):
     form=ProfileForm()
     update_form=UpdateProfile()
     return render(request,'profile.html',{"title":title,"form":form,'profiles':profiles,"update_form":update_form,"name":name})
+
+    #INITIATION PUSHER''

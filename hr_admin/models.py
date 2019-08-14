@@ -25,3 +25,8 @@ class EmployeeProfile(models.Model):
     kra=models.CharField(max_length=200)
     id_no=models.CharField(max_length=200)
     dob=models.DateField()
+
+class Notifications(models.Model):
+    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    message=models.CharField(max_length=225)
+    created_at=models.DateTimeField(auto_now=True)

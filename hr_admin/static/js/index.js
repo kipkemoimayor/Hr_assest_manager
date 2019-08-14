@@ -84,6 +84,10 @@ $(document).ready(_=>{
   var channel = pusher.subscribe('my-channel');
   var pa=document.querySelector("#love");
   channel.bind('my-event', function(data) {
+    // for(let i of data){
+    //   pa.textContent=JSON.stringify(data[i])
+    //   alert(JSON.stringify(data[i]))
+    // }
       pa.textContent=JSON.stringify(data)
   });
 

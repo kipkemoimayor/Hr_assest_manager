@@ -117,6 +117,14 @@
           </header>
         </section>
         <p id="love"></p>
+        <section>
+          <ul class="group-list bg-dark">
+            {%for noti in notifications%}
+            <li class="list-group-item">{{noti.message}} on {{noti.created_at}}</li>
+            {%endfor%}
+
+          </ul>
+        </section>
 
       </div>
 

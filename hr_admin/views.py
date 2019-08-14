@@ -159,6 +159,10 @@ def dashboard(request):
     title=f'{request.user} dashboard'
     if request.user.is_superuser:
         users=CustomUser.objects.all().exclude(username=request.user)
+        try:
+            notifications=Notifications.objects.all()
+        except :
+            raise Http404()
         if request.method=='POST':
             form=UserSignUp(request.POST)
             if form.is_valid():
@@ -197,7 +201,7 @@ def dashboard(request):
         form=UserSignUp()
         user_form=AssestForm()
 
-        return render(request,'dashboard.html',{"title":title,"form":form,'users':users,'user_form':user_form})
+        return render(request,'dashboard.html',{"title":title,"form":form,'users':users,'user_form':user_form,'notifications':notifications})
     else:
         return HttpResponse("You are not authorized")
 

@@ -189,3 +189,17 @@
   text-align: center;
   font-weight: 400;
 }
+#noticate{
+  display: none;
+}
+.header{
+  text-align: center;
+  font-weight: 400;
+}
+.over{
+  height: 600px;
+  overflow: auto;
+}
+.account_stage{
+
+}

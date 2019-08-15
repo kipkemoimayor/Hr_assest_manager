@@ -3,11 +3,13 @@ $(document).ready(_=>{
   let anchor=document.querySelector("#dashboard >div");
   let anchorTwo=document.querySelector("#two");
   let anchorThree=document.querySelector("#three");
-  console.log(anchorTwo);
+  let notification=document.querySelector("#noticate")
   anchor.addEventListener("click",_=>{
     anchor.classList.add("actives")
     anchorTwo.classList.remove("actives")
     anchorThree.classList.remove("actives")
+    $("#noticate").fadeOut(2000)
+    $("#noticate").hide()
     $("#asset").fadeOut(2000);
     $("#account").fadeIn(2000);
     $("#asset").hide();
@@ -16,6 +18,8 @@ $(document).ready(_=>{
     anchorTwo.classList.add("actives")
     anchor.classList.remove("actives")
     anchorThree.classList.remove("actives")
+    $("#noticate").fadeOut(2000)
+    $("#noticate").hide()
     $("#account").fadeOut(2000);
     $("#account").hide();
     $("#asset").fadeIn(2000);
@@ -26,6 +30,12 @@ $(document).ready(_=>{
     anchorThree.classList.add("actives")
     anchorTwo.classList.remove("actives")
     anchor.classList.remove("actives")
+    $("#account").fadeOut(2000);
+    $("#account").hide();
+    $("#asset").fadeOut(2000);
+    $("#asset").hide();
+    $("#noticate").show()
+    $("#noticate").fadeIn(2000)
   });
 
   // ajax request
@@ -95,6 +105,8 @@ $(document).ready(_=>{
   let arr=[]
   let all_list=document.querySelector('#notification');
 
+
+  //making notification
 
 
 });

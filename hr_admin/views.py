@@ -27,8 +27,11 @@ channels_client = pusher.Pusher(
 
 def index(request):
     title="Admin"
-
-    return render(request,"index.html",{"title":title})
+    if request.user.is_authenticated:
+        profile=EmployeeProfile.objects.filter(user=request.user)
+    else:
+        profile=''
+    return render(request,"index.html",{"title":title,"profile":profile})
 
 def signup(request):
     title="Quest SignUp"
@@ -143,7 +146,7 @@ def user_logout(request):
 
     s='my-channel'
     d='message'
-    mess=f'{request.user} logged out!'
+    mess=f'{request.user} logged  🤔 out!'
 
     try:
         channels_client.trigger(s, 'my-event',{d: mess})
@@ -295,7 +298,7 @@ def employee_profile(request):
 
                 s='my-channel'
                 d='message'
-                mess=f'{request.user} Updated Profile!'
+                mess=f'{request.user} Updated Profile 🤔 🤔!'
                 channels_client.trigger(s, 'my-event',{d: mess})
                 s=Notifications.objects.create(message=mess,user=request.user)
                 s.save()

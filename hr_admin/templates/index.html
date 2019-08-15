@@ -4,10 +4,11 @@
 <div class="container ">
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
     <div style="margin-top:5em" class="home">
       <section>
-        <header>
+        <!-- <header>
           <h5>Security Accounts</h5>
         </header>
         {%if user.is_authenticated%}
@@ -22,24 +23,74 @@
         {%else%}
         <p>Manage accounts <a href="{%url 'signup'%}">SignUp</a> </p>
         <p>Manage accounts <a href="{%url 'login'%}">Login</a> </p>
-        {%endif%}
+        {%endif%} -->
 
 
-        <div class="card">
+        <div class="card ">
             <div id="bog" class="card-header">
-
+              <h2>Hr Inventory Management System</h2>
             </div>
-            <div class="card-body">
-              <p>Assest management system</p>
+            <div class="card-body whole">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card into">
+                    <div class="overlay">
+                    <section>
+                      <header>
+                        <h3 class="section">Manage Assest</h3>
+                      </header>
+                    </section>
+                    <p class="animated fadeIn">Brace your self a new technology to manage your companie's assest with ease and beuatiful experience. Just with few click choose the employee you want to assign assest to and in a touch of a button its done! Great</p>
+                    <p>Dont be left Out you can see all assest signed to each employee without digging to some old papers in store.</p>
+                  </div>
+                </div>
+                <div class="center"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="card into">
+                    <div class="overlay">
+                    <section>
+                      <header>
+                      <h3 class="section">Real time notification</h3>
+                      </header>
+                    </section>
+                    <p>Nothing effecient than being upto date with relevant information about your employee. Then join our platform 24/7 clock sytem with real time notification to track your employee Activity </p>
+                    <br>
+                    <p>Hurry and join this wonderful team of engineers driving the Hr system to the next level</p>
+                  </div>
+
+                </div>
+                </div>
+
+              </div>
+
             </div>
             <div class="footer">
-              <p>2019/07/01</p>
+              {%if user.is_authenticated%}
+              {%if user.is_superuser%}
+              <p style="text-align:center;">Welcome {{user.name}} <a href="{%url 'dashboard'%}">Head to dashboard!</a></p>
+              {%else%}
+              {%if profile%}
+              <div class="alert alert-success">
+                <p align='center'>Profile is upto date</p>
+              </div>
+
+              {%else%}
+                  <p class="alert alert-warning" style="text-align:center;">Welcome {{user.name}} <a href="{%url 'dashboard'%}">Please Update your profile <i class="fas fa-exclamation"></i></a></p>
+              {%endif%}
+
+              {%endif%}
+              {%else%}
+              <p style="text-align:center;">Are you excited then <a href="{%url 'signup'%}">Get started here 😂!</a></p>
+              {%endif%}
             </div>
         </div>
       </section>
 
     </div>
   </div>
+    <div class="col-md-2"></div>
 </div>
 
 </div>

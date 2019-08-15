@@ -116,11 +116,14 @@
 
           </header>
         </section>
-        <p id="love"></p>
+        <div class="alert alert-info">
+          New! <p id="love"></p>
+        </div>
+
         <section>
-          <ul class="group-list bg-dark">
+          <ul id='notification'  class="group-list bg-dark">
             {%for noti in notifications%}
-            <li class="list-group-item">{{noti.message}} on {{noti.created_at}}</li>
+            <li class="list-group-item not bg-default">{{noti.message}} on {{noti.created_at}} <span id="{{noti.id}}" class="btn btn-success btn-sm mark">Mark as Read</span></li>
             {%endfor%}
 
           </ul>

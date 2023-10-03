@@ -4,7 +4,7 @@ Django==2.2.4
 django-bootstrap4==0.0.8
 django-heroku==0.3.1
 gunicorn==19.9.0
-Pillow==6.0.0
+Pillow==10.0.1
 psycopg2==2.8.2
 pyperclip==1.7.0
 python-decouple==3.1
